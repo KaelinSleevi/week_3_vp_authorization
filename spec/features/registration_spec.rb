@@ -48,5 +48,60 @@ RSpec.describe "User Registration" do
         expect(page).to have_content("Welcome, User Two!")
       end
     end
-  end 
+  end
+
+  describe "As a visitor when I visit `/register`" do
+    describe "and I fail to fill in my name" do
+      it "I'm taken back to the `/register` page and a flash message pops up, telling me what went wrong" do
+        visit register_path
+
+        fill_in :user_name, with: ''
+        fill_in :user_email, with:'notunique@example.com'
+        fill_in 'Password:', with: 'Test'
+        fill_in 'Password Confirmation:', with: 'Test'
+
+        click_button 'Create New User'
+
+        expect(current_path).to eq(register_path)
+        expect(page).to have_content("Name can't be blank")
+      end
+    end
+  end
+
+  describe "As a visitor when I visit `/register`" do
+    describe "and I fail to fill in a unique email" do
+      it "I'm taken back to the `/register` page and a flash message pops up, telling me what went wrong" do
+        User.create(name: 'User Two', email: 'notunique@example.com', password: 'Test')
+        visit register_path
+
+        fill_in :user_name, with: 'User Two'
+        fill_in :user_email, with:'notunique@example.com'
+        fill_in 'Password:', with: 'Test'
+        fill_in 'Password Confirmation:', with: 'Test'
+
+        click_button 'Create New User'
+
+        expect(current_path).to eq(register_path)
+        expect(page).to have_content("Email has already been taken")
+      end
+    end
+  end
+
+  describe "As a visitor when I visit `/register`" do
+    describe "and I fail to fill matching passwords" do
+      it "I'm taken back to the `/register` page and a flash message pops up, telling me what went wrong" do
+        visit register_path
+
+        fill_in :user_name, with: 'User Two'
+        fill_in :user_email, with:'notunique@example.com'
+        fill_in 'Password:', with: 'Test'
+        fill_in 'Password Confirmation:', with: 'Test3'
+
+        click_button 'Create New User'
+
+        expect(current_path).to eq(register_path)
+        expect(page).to have_content("Password confirmation doesn't match Password")
+      end
+    end
+  end
 end

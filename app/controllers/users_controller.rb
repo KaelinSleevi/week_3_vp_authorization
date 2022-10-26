@@ -9,7 +9,8 @@ class UsersController < ApplicationController
 
     def create 
         user = User.create(user_params)
-        if user.save
+        user[:email] = user[:email].downcase
+        if user.save 
             redirect_to user_path(user)
             flash[:success] = "Welcome, #{user.name}!"
         else  
