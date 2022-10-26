@@ -57,4 +57,24 @@ RSpec.describe 'Landing Page' do
             end
         end
     end
+
+    describe "As a registered user when I visit the landing page `/`" do
+        describe "And click on the link to go to my dashboard and fail to fill in my correct credentials" do
+            it "I'm taken back to the Log In page and I can see a flash message telling me that I entered incorrect credentials." do
+                    
+                click_button "Log In"
+
+                expect(current_path).to eq(login_path)
+            
+                fill_in :name, with: @user1.name
+                fill_in 'Password:', with: 'pizzabegood'
+            
+                click_on "Submit"
+            
+                expect(current_path).to eq(login_path)
+            
+                expect(page).to have_content("Incorrect Credentials")
+            end
+        end
+    end
 end
