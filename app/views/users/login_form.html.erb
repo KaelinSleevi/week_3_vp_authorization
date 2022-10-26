@@ -1,0 +1,10 @@
+<h1>Log In</h1>
+
+<%= form_with url: login_path, method: :post, local: true do |form| %>
+  <%= form.label :name %>
+  <%= form.text_field :name, required: true %><br>
+  <%= form.label :password, "Password:" %>
+  <%= form.text_field :password %>
+  
+  <%= form.submit "Submit" %>
+<% end %>

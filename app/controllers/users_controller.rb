@@ -17,7 +17,17 @@ class UsersController < ApplicationController
             flash[:error] = user.errors.full_messages.to_sentence
             redirect_to register_path
         end 
-    end 
+    end
+
+    def login_form
+
+    end
+
+    def login
+        user = User.find_by(name: params[:name]) 
+        flash[:success] = "Welcome, #{user.name}!"
+        redirect_to root_path
+    end
 
     private 
 

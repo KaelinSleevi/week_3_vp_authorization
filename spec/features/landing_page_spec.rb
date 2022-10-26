@@ -39,14 +39,14 @@ RSpec.describe 'Landing Page' do
         describe "I see a link for 'Log In' when I click on 'Log In'" do
             describe "I'm taken to a Log In page ('/login') where I can input my unique email and password." do
                 it "when I enter my unique email and correct password, I'm taken to my dashboard page" do
-                    expect(page).to have_link("Log In")
+                    expect(page).to have_button("Log In")
                     
-                    click_link "Log In"
+                    click_button "Log In"
     
                     expect(current_path).to eq(login_path)
                 
-                    fill_in 'Username', with: @user1.user_name
-                    fill_in 'Password', with: @user1.password
+                    fill_in :name, with: @user1.name
+                    fill_in 'Password:', with: @user1.password
                 
                     click_on "Submit"
                 
