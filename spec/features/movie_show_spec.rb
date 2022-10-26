@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Movies Index Page' do
-    before do 
-        @user1 = User.create(name: "User One", email: "user1@test.com")
+    before :each do 
+        @user1 = User.create(name: "User One", email: "user1@test.com", password: "Test")
         i = 1
         20.times do 
             Movie.create(title: "Movie #{i} Title", rating: rand(1..10), description: "This is a description about Movie #{i}")
@@ -11,6 +11,7 @@ RSpec.describe 'Movies Index Page' do
     end 
 
     it 'shows all movies' do 
+
         visit "users/#{@user1.id}"
 
         click_button "Find Top Rated Movies"
