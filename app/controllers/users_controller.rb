@@ -11,6 +11,7 @@ class UsersController < ApplicationController
         user = User.create(user_params)
         if user.save
             redirect_to user_path(user)
+            flash[:success] = "Welcome, #{user.name}!"
         else  
             flash[:error] = user.errors.full_messages.to_sentence
             redirect_to register_path
